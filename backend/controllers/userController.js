@@ -38,6 +38,8 @@ const register = asyncHandler(async (req,res)=>{
             _id: newUser._id,
             name: newUser.name,
             email: newUser.email,
+            cart: newUser.cart,
+            history: newUser.history,
             token: genrateToken(newUser._id)
         })
     }
@@ -57,6 +59,8 @@ const login = asyncHandler(async (req,res)=>{
             _id: findUser._id,
             name: findUser.name,
             email: findUser.email,
+            cart: findUser.cart,
+            history: findUser.history,
             token: genrateToken(findUser._id)
         })
     } else {
@@ -71,13 +75,34 @@ const login = asyncHandler(async (req,res)=>{
 // route type PROTECTED
 
 const addItem = asyncHandler(async (req,res)=>{
-    const updateUser = await USER.findByIdAndUpdate(req.user._id,{$push: {"cart": {item: req.body.id, quantity: req.body.quantity}}},{new: true})
+    console.log(`from add item backend ${req.body.quantity}`)
+    
+    const updateUser = await USER.findByIdAndUpdate(req.user._id,{$push: {"cart": {item: req.body.id, quantity: req.body.quantity, image: req.body.image, name: req.body.name, price: 10}}},{new: true})
     res.json({
         _id: updateUser._id,
         name: updateUser.name,
-        cart: updateUser.cart
+        email: updateUser.email,
+        cart: updateUser.cart,
+        history: updateUser.history
     })
 })
+
+// desc remove from  user cart
+// POST /user/removeitem
+// route type PROTECTED
+
+const removeItem = asyncHandler(async (req,res)=>{
+    
+    const updateUser = await USER.findByIdAndUpdate(req.user._id,{$set: {cart: []}},{new: true})
+    res.json({
+        _id: updateUser._id,
+        name: updateUser.name,
+        email: updateUser.email,
+        cart: updateUser.cart,
+        history: updateUser.history
+    })
+})
+
 
 
 //desc get information of logged in user
@@ -101,5 +126,5 @@ const genrateToken =(id)=>{
 }
 
 
-module.exports = {register,login,addItem,userInfo}
+module.exports = {register,login,addItem,userInfo,removeItem}
 

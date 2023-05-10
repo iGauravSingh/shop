@@ -9,6 +9,8 @@ import './Shop.css'
 
 const Shop = () => {
   const [list,setList] = useState(false)
+  
+
   const dispatch= useDispatch()
   const { products,isSuccess,isError,message } = useSelector((state)=> state.product)
   //
@@ -30,6 +32,8 @@ const Shop = () => {
   // }
  //
 
+ const [category, setCategory] = useState(products)
+
  useEffect(() => {
   if (isError) {
     console.log(message)
@@ -43,13 +47,38 @@ const Shop = () => {
 }, [isError, message, dispatch])
 
 useEffect(()=>{
-  setList(true)
-},[products.length])
+  setCategory(products)
+},[products])
+
+////////// search by category
+
+
+
+const handleClick=(text)=>{
+  if(text === 'all'){
+    setCategory(products)
+    return
+  }
+  let heroCategory = products.filter(item => item.itemType === text)
+  setCategory(heroCategory)
+}
+
+//////////
+
 
   return (
     <>
+    <div>
+      <div>
+        <button onClick={()=>handleClick('all')}>All</button>
+        <button onClick={()=>handleClick('elec')}>Electronics</button>
+        <button onClick={()=>handleClick('cloth')}>Cloths</button>
+        <button onClick={()=>handleClick('furniture')}>Furniture</button>
+        <button onClick={()=>handleClick('other')}>Others</button>
+      </div>
+    </div>
     <div className='cardcontainer'>
-    {products.map(pro=> (
+    {category.map(pro=> (
       <ProductItem key={pro._id} name={pro.name} rating={pro.rating} image={pro.image} id={pro._id} />
     )
     )}

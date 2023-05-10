@@ -10,8 +10,8 @@ const Header = () => {
                 <li><Link to='/'><ImHome /></Link></li>
                 <li><Link to='/container/about'><ImProfile /></Link></li>
                 <li><Link to='/container/shop'><ImPriceTags /></Link></li>
-                <li><Link to='/coontainer/cart'><ImCart /></Link></li>
-                <li><Link to='/container/user'><ImUser /></Link></li>
+                <li><Link to='/container/cart'><ImCart /></Link></li>
+                <li><Link to='/container/dashboard'><ImUser /></Link></li>
             </ul>
             
             

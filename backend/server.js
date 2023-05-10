@@ -19,7 +19,7 @@ app.get('/',(req,res)=>{
 })
 app.use('/products',require('./routes/productRoutes'))
 app.use('/user',require('./routes/userRoutes'))
-
+app.use('/order',require('./routes/orderRoutes'))
 
 app.use(errorHandler)
 

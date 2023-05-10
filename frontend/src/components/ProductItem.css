@@ -6,7 +6,7 @@
   }
   
   /* Add rounded corners to the top left and the top right corner of the image */
-  img {
+  .container img {
     border-radius: 5px 5px 0 0;
     width: 180px;
     height: 280px;
